@@ -27,6 +27,9 @@
 
       input,
       button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-top: 5px; /* Space above each input/button */
         width: 100%; /* Makes elements span full popup width */
         padding: 6px; /* Adds inner space for better usability */
@@ -42,8 +45,12 @@
     <!-- Section 1: Rename the active tab -->
     <!-- Text input to accept a new title for the current tab -->
     <input type="text" id="newTitle" placeholder="New Tab Name" />
+
     <!-- Button to trigger the renaming functionality -->
-    <button id="renameBtn">Rename Tab</button>
+    <button id="renameBtn">
+      Rename Tab
+      <img src="icons/pawprint2.png" style="width: 30px; height: 20px" ; />
+    </button>
 
     <hr />
     <!-- Horizontal rule to separate UI sections visually -->
@@ -51,8 +58,12 @@
     <!-- Section 2: Search for tabs by saved name -->
     <!-- Input to search saved custom tab titles -->
     <input type="text" id="searchTitle" placeholder="Search saved tab name" />
+
     <!-- Button to execute the search -->
-    <button id="searchBtn">Find Tab</button>
+    <button id="searchBtn" class="image-button">
+      Find Tab
+      <img src="icons/pawprint2.png" style="width: 30px; height: 20px" ; />
+    </button>
 
     <!-- Container to display matching tab results dynamically -->
     <ul
