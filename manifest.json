@@ -1,3 +1,23 @@
+// {
+//   "manifest_version": 3,
+//   "name": "Tab Renamer",
+//   "version": "1.0",
+//   "description": "Rename your Chrome tab title easily and automatically.",
+//   "permissions": [
+//     "tabs",
+//     "scripting",
+//     "storage"
+//   ],
+//   "host_permissions": [
+//     "<all_urls>"
+//   ],
+//   "action": {
+//     "default_popup": "popup.html"
+//   },
+//   "background": {
+//     "service_worker": "background.js"
+//   }
+// }
 {
   "manifest_version": 3,
   "name": "Tab Renamer",
@@ -16,5 +36,10 @@
   },
   "background": {
     "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }
