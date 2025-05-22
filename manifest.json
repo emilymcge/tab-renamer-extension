@@ -1,11 +1,13 @@
-"background": {
-  "service_worker": "background.js"
+{
+  "manifest_version": 3,
+  "name": "Tab Renamer",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "scripting", "storage"],
+  "host_permissions": ["<all_urls>"]
 }
-"permissions": [
-  "tabs",
-  "scripting",
-  "storage"
-],
-"host_permissions": [
-  "<all_urls>"
-]
