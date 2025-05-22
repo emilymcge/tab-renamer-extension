@@ -5,7 +5,10 @@ document.getElementById('renameBtn').addEventListener('click', async () => {
   if (!newTitle) return; // Exit if the field is empty
 
   //Query for the currently active tab in the current window
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
 
   // Guard clause: Don't run on chrome:// internal pages
   if (!tab || !tab.url || tab.url.startsWith('chrome://')) {
@@ -26,6 +29,7 @@ document.getElementById('renameBtn').addEventListener('click', async () => {
   chrome.storage.local.set({ [tab.url]: newTitle }, () => {
     console.log('Saved title for:', tab.url);
   });
+  window.close;
 });
 
 /*
@@ -35,6 +39,17 @@ document.getElementById('renameBtn').addEventListener('click', async () => {
   - [chrome.storage.local](https://developer.chrome.com/docs/extensions/reference/storage/#property-local)
   - [Element.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 */
+
+//allows user to press enter to change tab name
+document.getElementById('newTitle').addEventListener('keydown', async (e) => {
+  const newTitle = document.getElementById('newTitle').value.trim();
+  if (!newTitle) return;
+  // Get the value from the input field and trim whitespace
+  if (e.key === 'Enter') {
+    renameTab(newTitle);
+  }
+  window.close;
+});
 
 // Add click listener to the "Find Tab" button
 document.getElementById('searchBtn').addEventListener('click', async () => {
@@ -118,10 +133,16 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
   - [MutationObserver (used in background.js)](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 */
 
-//made this function so we can access it when using the right click method
+//abstracted rename tab
 async function renameTab(title) {
+  const newTitle = document.getElementById('newTitle').value.trim();
+  if (!newTitle) return; // Exit if the field is empty
+
   //Query for the currently active tab in the current window
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
 
   // Guard clause: Don't run on chrome:// internal pages
   if (!tab || !tab.url || tab.url.startsWith('chrome://')) {
@@ -142,4 +163,5 @@ async function renameTab(title) {
   chrome.storage.local.set({ [tab.url]: newTitle }, () => {
     console.log('Saved title for:', tab.url);
   });
+  window.close;
 }
