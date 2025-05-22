@@ -133,6 +133,31 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
   - [MutationObserver (used in background.js)](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 */
 
+document.getElementById('icon-boxes').addEventListener('change', async (e) => {
+  const iconUrl = chrome.runtime.getURL(e.target.value);
+
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    args: [iconUrl],
+    func: (url) => {
+      console.log('Changing favicon to:', url);
+
+      // Remove all existing favicon links
+      document
+        .querySelectorAll("link[rel*='icon']")
+        .forEach((el) => el.remove());
+
+      // Create a new one
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.type = 'image/png';
+      link.href = url + '?v=' + Date.now(); // cache-busting
+      document.head.appendChild(link);
+    },
+  });
+});
 //abstracted rename tab
 async function renameTab(title) {
   const newTitle = document.getElementById('newTitle').value.trim();

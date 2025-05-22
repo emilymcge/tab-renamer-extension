@@ -14,6 +14,16 @@
       "128": "icons/cat128.png"
     }
   },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/browncat.png",
+        "icons/whitecat.png",
+        "icons/greycat.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   }
