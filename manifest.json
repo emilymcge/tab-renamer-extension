@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tab Renamer",
+  "name": "Tabby",
   "version": "1.0",
   "description": "Rename your Chrome tab title easily and automatically.",
   "permissions": ["tabs", "scripting", "storage", "contextMenus"],
