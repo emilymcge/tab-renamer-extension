@@ -11,6 +11,18 @@
         font-family: sans-serif; /* Clean, readable font */
         padding: 10px 20px 5px 10px; /* Adds padding around the content */
         width: 200px; /* Fixed width of the popup window */
+        background-color: cornsilk;
+        border-style: solid;
+        border-radius: 10px;
+        border-width: 5px;
+        border-color: chocolate;
+        overflow: hidden;
+        margin: 0;
+      }
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       input,
@@ -23,6 +35,10 @@
   </head>
 
   <body>
+    <div>
+      <h1>Tabby</h1>
+      <img src="icons/cat38.png" />
+    </div>
     <!-- Section 1: Rename the active tab -->
     <!-- Text input to accept a new title for the current tab -->
     <input type="text" id="newTitle" placeholder="New Tab Name" />
