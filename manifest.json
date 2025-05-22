@@ -3,14 +3,8 @@
   "name": "Tab Renamer",
   "version": "1.0",
   "description": "Rename your Chrome tab title easily and automatically.",
-  "permissions": [
-    "tabs",
-    "scripting",
-    "storage"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["tabs", "scripting", "storage", "contextMenus"],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html"
   },

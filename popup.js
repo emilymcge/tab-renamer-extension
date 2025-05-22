@@ -4,20 +4,22 @@ document.getElementById('renameBtn').addEventListener('click', async () => {
   const newTitle = document.getElementById('newTitle').value.trim();
   if (!newTitle) return; // Exit if the field is empty
 
-  // Query for the currently active tab in the current window
+  //Query for the currently active tab in the current window
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   // Guard clause: Don't run on chrome:// internal pages
   if (!tab || !tab.url || tab.url.startsWith('chrome://')) {
-    alert("Cannot rename tabs on internal Chrome pages (chrome://)");
+    alert('Cannot rename tabs on internal Chrome pages (chrome://)');
     return;
   }
 
   // Inject a script into the current tab to change the document's title
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    func: (title) => { document.title = title; }, // code run inside tab
-    args: [newTitle] // argument passed into the function above
+    func: (title) => {
+      document.title = title;
+    }, // code run inside tab
+    args: [newTitle], // argument passed into the function above
   });
 
   // Store the new title in chrome.storage.local using the tab's URL as the key
@@ -34,12 +36,13 @@ document.getElementById('renameBtn').addEventListener('click', async () => {
   - [Element.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 */
 
-
-
 // Add click listener to the "Find Tab" button
 document.getElementById('searchBtn').addEventListener('click', async () => {
   // Get search term from input and convert to lowercase
-  const searchTerm = document.getElementById('searchTitle').value.trim().toLowerCase();
+  const searchTerm = document
+    .getElementById('searchTitle')
+    .value.trim()
+    .toLowerCase();
 
   // Get the results <ul> and clear it from previous searches
   const resultsList = document.getElementById('resultsList');
@@ -87,9 +90,8 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
               const original = document.body.style.outline;
               let counter = 0;
               const interval = setInterval(() => {
-                document.body.style.outline = counter % 2 === 0
-                  ? '5px solid red'
-                  : 'none';
+                document.body.style.outline =
+                  counter % 2 === 0 ? '5px solid red' : 'none';
                 counter++;
                 if (counter > 5) {
                   clearInterval(interval);
@@ -98,7 +100,7 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
               }, 300);
             };
             flash();
-          }
+          },
         });
       });
 
@@ -115,3 +117,29 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
   - [HTMLElement.style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style)
   - [MutationObserver (used in background.js)](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 */
+
+//made this function so we can access it when using the right click method
+async function renameTab(title) {
+  //Query for the currently active tab in the current window
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  // Guard clause: Don't run on chrome:// internal pages
+  if (!tab || !tab.url || tab.url.startsWith('chrome://')) {
+    alert('Cannot rename tabs on internal Chrome pages (chrome://)');
+    return;
+  }
+
+  // Inject a script into the current tab to change the document's title
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    func: (title) => {
+      document.title = title;
+    }, // code run inside tab
+    args: [newTitle], // argument passed into the function above
+  });
+
+  // Store the new title in chrome.storage.local using the tab's URL as the key
+  chrome.storage.local.set({ [tab.url]: newTitle }, () => {
+    console.log('Saved title for:', tab.url);
+  });
+}
