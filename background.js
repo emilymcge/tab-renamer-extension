@@ -6,21 +6,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         chrome.scripting.executeScript({
           target: { tabId },
           func: (title) => {
-            const applyTitle = () => {
+            const setCustomTitle = () => {
               if (document.title !== title) {
                 document.title = title;
               }
             };
 
-            applyTitle();
+            // Run once initially
+            setCustomTitle();
 
-            const observer = new MutationObserver(applyTitle);
-            const titleElement = document.querySelector('title');
-            if (titleElement) {
-              observer.observe(titleElement, { childList: true });
+            // Observe the <title> element directly
+            const titleEl = document.querySelector('title');
+            if (titleEl) {
+              const observer = new MutationObserver(setCustomTitle);
+              observer.observe(titleEl, { childList: true });
             }
 
-            setInterval(applyTitle, 1000); // fallback in case of missed changes
+            // Also fallback to polling every second
+            setInterval(setCustomTitle, 1000);
           },
           args: [savedTitle]
         });
